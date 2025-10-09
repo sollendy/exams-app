@@ -41,4 +41,46 @@ class UserFactory extends Factory
             'email_verified_at' => null,
         ]);
     }
+
+        /**
+     * Indica che l'utente è un admin.
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    public function admin(): static
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'role' => 'admin',
+            ];
+        });
+    }
+
+    /**
+     * Indica che l'utente è un supervisor.
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    public function supervisor(): static
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'role' => 'supervisor',
+            ];
+        });
+    }
+
+    /**
+     * Indica che l'utente è un user normale.
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    public function user(): static
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'role' => 'user',
+            ];
+        });
+    }
 }
