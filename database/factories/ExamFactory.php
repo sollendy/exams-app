@@ -25,7 +25,7 @@ class ExamFactory extends Factory
             'title' => $this->faker->word,
             'exam_date' => $this->faker->date(),
             'vote' => $this->faker->randomFloat(2, 18, 30),
-            'user_id' => User::inRandomOrder()->first()->id,
+            'user_id' => User::where('role', 'user')->inRandomOrder()->first()->id,
         ];
     }
 }

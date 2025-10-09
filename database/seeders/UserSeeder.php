@@ -16,21 +16,20 @@ class UserSeeder extends Seeder
         User::factory()->admin()->create([
             'name' => 'Admin User',
             'email' => 'admin@example.com',
-            'password' => bcrypt('admin123'), // Puoi mettere una password a tua scelta
+            'password' => bcrypt('admin123'), 
         ]);
 
-        // Crea un utente supervisor
         User::factory()->supervisor()->create([
             'name' => 'Supervisor User',
             'email' => 'supervisor@example.com',
             'password' => bcrypt('supervisor123'),
         ]);
 
-        // Crea un utente normale (user)
-        User::factory()->user()->create([
-            'name' => 'Regular User',
-            'email' => 'user@example.com',
-            'password' => bcrypt('user123'),
-        ]);
+        // User::factory()->user()->create([
+        //     'name' => 'Regular User',
+        //     'email' => 'user@example.com',
+        //     'password' => bcrypt('user123'),
+        // ]);
+        User::factory()->user()->count(10)->create();
     }
 }
