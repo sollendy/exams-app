@@ -8,6 +8,12 @@ use Illuminate\Http\Request;
 
 class ExamController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware("role:admin")->only("create");
+        $this->middleware('auth')->only('userExams');
+    }
+
     public function create(Request $request)
     {
         $request->validate([

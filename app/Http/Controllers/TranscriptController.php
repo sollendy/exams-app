@@ -8,17 +8,22 @@ use Illuminate\Http\Request;
 
 class TranscriptController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware("role:supervisor")->only("assignVote");
+    }
+
     public function assignVote(Request $request, $userId, $examId)
-{
-    $request->validate([
-        'vote' => 'required|integer|min:1|max:10',
-    ]);
+    {
+        $request->validate([
+            'vote' => 'required|integer|min:1|max:10',
+        ]);
 
-    $transcript = Transcript::updateOrCreate(
-        ['user_id' => $userId, 'exam_id' => $examId],
-        ['vote' => $request->vote]
-    );
+        $transcript = Transcript::updateOrCreate(
+            ['user_id' => $userId, 'exam_id' => $examId],
+            ['vote' => $request->vote]
+        );
 
-    return response()->json($transcript, 200);
-}
+        return response()->json($transcript, 200);
+    }
 }
