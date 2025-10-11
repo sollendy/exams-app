@@ -5,9 +5,9 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TranscriptController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -22,7 +22,7 @@ Route::middleware('auth')->group(function () {
 // Rotte per gli esami
 //-------------------------------------- PUBBLICA ------------------------------------------------------------------------------------
 
-Route::get("all-exams", [ExamController::class, "allExams"])->name("exam.all");
+Route::get("/", [ExamController::class, "allExams"])->name("exam.all");
 
 //-------------------------------------- PUBBLICA ------------------------------------------------------------------------------------
 
@@ -34,6 +34,6 @@ Route::prefix("exam")->middleware("auth")->group(function () {
     Route::put("/give-vote", [TranscriptController::class, "assignVote"])
     ->middleware(['checkRole:admin,super-admin'])->name("exam.assignment");
 });
-//------------------------------------- FINE PRIVATE -----------------------------------------------------------------
+//------------------------------------- FINE PRIVATE-----------------------------------------------------------------
 
 require __DIR__.'/auth.php';
