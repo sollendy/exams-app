@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+
 use App\Models\Exam;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 
 class ExamController extends Controller
 {

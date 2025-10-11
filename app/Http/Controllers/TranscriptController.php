@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+
 use App\Models\Transcript;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 
 class TranscriptController extends Controller
 {
