@@ -9,11 +9,6 @@ use Illuminate\Routing\Controller;
 
 class TranscriptController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware("role:supervisor")->only("assignVote");
-    }
-
     public function assignVote(Request $request, $userId, $examId)
     {
         $request->validate([

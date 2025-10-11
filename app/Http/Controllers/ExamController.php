@@ -9,12 +9,6 @@ use Illuminate\Routing\Controller;
 
 class ExamController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware("role:admin")->only("create");
-        $this->middleware('auth')->only('userExams');
-    }
-
     public function create(Request $request)
     {
         $request->validate([
@@ -33,7 +27,7 @@ class ExamController extends Controller
         return response()->json($exams, 200);
     }
 
-    public function listExams(Request $request)
+    public function allExams(Request $request)
     {
         $query = Exam::query();
 
