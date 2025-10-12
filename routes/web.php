@@ -22,7 +22,7 @@ Route::middleware('auth')->group(function () {
 // Rotte per gli esami
 //-------------------------------------- PUBBLICA ------------------------------------------------------------------------------------
 
-Route::get("/", [ExamController::class, "allExams"])->name("exam.all");
+Route::get("/", [ExamController::class, "allExams"])->name("exams.index");
 
 //-------------------------------------- PUBBLICA ------------------------------------------------------------------------------------
 

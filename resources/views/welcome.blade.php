@@ -43,39 +43,53 @@
     <div class="d-flex justify-content-center w-100">
         <main class="container d-flex flex-column flex-lg-row align-items-center gap-5">
             <div class="card p-4 w-100 w-lg-75 bg-white text-dark shadow-sm">
-                <h1 class="mb-2 text-center">Piattaforma Esami di Romiltec</h1>
-                <p class="mb-3 text-muted text-center">Benvenuti Nella nostra piattaforma gestionale per i vostri esami!
-                </p>
+                <div class="header-welcome-list text-center">
+                    <h1 class="mb-2">Piattaforma Esami di Romiltec</h1>
+                    <p class="mb-3 text-muted">Benvenuti Nella nostra piattaforma gestionale per i vostri
+                        esami!
+                    </p>
+                </div>
 
-                <ul class="list-unstyled mb-4">
-                    <li class="d-flex align-items-center gap-3 py-2">
-                        <span class="circle-icon"></span>
-                        <span>
-                            Read the
-                            <a href="https://laravel.com/docs" target="_blank"
-                                class="text-danger text-decoration-underline">
-                                Documentation
-                            </a>
-                        </span>
-                    </li>
-                    <li class="d-flex align-items-center gap-3 py-2">
-                        <span class="circle-icon"></span>
-                        <span>
-                            Watch video tutorials at
-                            <a href="https://laracasts.com" target="_blank"
-                                class="text-danger text-decoration-underline">
-                                Laracasts
-                            </a>
-                        </span>
-                    </li>
-                </ul>
-                <ul class="list-unstyled d-flex gap-3">
-                    <li>
-                        <a href="https://cloud.laravel.com" target="_blank" class="btn btn-dark text-white">
-                            Deploy now
-                        </a>
-                    </li>
-                </ul>
+                <div class="mb-4">
+                    <form action="{{ route('exams.index') }}" method="GET">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <input type="text" name="title" class="form-control" placeholder="Cerca per titolo">
+                            </div>
+                            <div class="col-md-4">
+                                <input type="date" name="date" class="form-control">
+                            </div>
+                            <div class="col-md-4">
+                                <button type="submit" class="btn btn-dark w-100">Filtra</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <h2 class="text-center mb-4">Esplora la nostra banca dati</h2>
+
+                @if (count($esami) > 0)
+                    <table class="table table-bordered table-hover table-striped mb-4">
+                        <thead>
+                            <tr>
+                                <th>Titolo Esame</th>
+                                <th>Data Esame</th>
+                                <th>Voto Assegnato</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($esami as $esame)
+                                <tr>
+                                    <td><strong>{{ $esame->title }}</strong></td>
+                                    <td>{{ \Carbon\Carbon::parse($esame->exam_date)->format('d/m/Y') }}</td>
+                                    <td>{{ $esame->vote }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                @else
+                    <p class="text-muted">Non ci sono esami disponibili al momento.</p>
+                @endif
             </div>
         </main>
     </div>

@@ -45,7 +45,7 @@ class ExamController extends Controller
             $query->whereDate('exam_date', $request->date);
         }
 
-        $exams = $query->orderBy('exam_date')->get();
+        $exams = $query->with("user")->orderBy('exam_date')->get();
 
         // return response()->json($exams, 200);
         return view("welcome", ["esami" => $exams]);
