@@ -9,10 +9,13 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CheckRole
 {
+    
     /**
-     * Handle an incoming request.
+     * Gestisce una richiesta in entrata.
      *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next: $role
+     * @param \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     * @param  mixed ...$roles
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function handle(Request $request, Closure $next, ...$roles): Response
     {

@@ -27,10 +27,9 @@ class ExamController extends Controller
 
     public function userExams(Request $request)
     {
-        $userExams = Exam::where('user_id', $request->user()->id)->get();
-        // $exams = $request->user()->exams;
-        // dd($userExams);
-        return response()->json($userExams, 200);
+        $userExams = Exam::where('user_id', $request->user()->id)->get() ?? collect();
+        
+        return view("dashboard", ["esamiUtente" => $userExams]);
     }
 
     public function allExams(Request $request)

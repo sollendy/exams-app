@@ -1,16 +1,15 @@
 <nav x-data="{ open: false }" class="navbar navbar-expand-lg navbar-light bg-white border-bottom">
-    <!-- Primary Navigation Menu -->
+    
     <div class="container">
         <div class="d-flex justify-content-between align-items-center h-16">
             <div class="d-flex">
-                <!-- Logo -->
+                
                 <div class="flex-shrink-0">
                     <a href="{{ route('dashboard') }}">
                         <x-application-logo class="h-9 w-auto fill-current text-dark" />
                     </a>
                 </div>
 
-                <!-- Navigation Links -->
                 <div class="d-none d-lg-flex ms-10">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
@@ -18,7 +17,6 @@
                 </div>
             </div>
 
-            <!-- Settings Dropdown -->
             <div class="d-none d-sm-flex align-items-center ms-6">
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">

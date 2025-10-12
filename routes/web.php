@@ -28,9 +28,9 @@ Route::get("/", [ExamController::class, "allExams"])->name("exams.index");
 
 //------------------------------------- PRIVATE -----------------------------------------------------------------
 
-Route::prefix("exam")->middleware("auth")->group(function () {
-    Route::get("/user-exams", [ExamController::class, "userExams"])->middleware("checkRole:user")->name("exam.user");
-    Route::post("/create-exam", [ExamController::class, "create"])->middleware("checkRole:admin")->name("exam.create");
+Route::middleware("auth")->group(function () {
+    Route::get("/dashboard", [ExamController::class, "userExams"])->middleware("CheckRole:user")->name("exam.user");
+    Route::post("/create-exam", [ExamController::class, "create"])->middleware("CheckRole:admin")->name("exam.create");
     Route::put("/give-vote", [TranscriptController::class, "assignVote"])
     ->middleware(['checkRole:admin,super-admin'])->name("exam.assignment");
 });
