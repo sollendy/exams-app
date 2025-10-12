@@ -47,7 +47,7 @@ class ExamController extends Controller
 
         $exams = $query->orderBy('exam_date')->get();
 
-        return response()->json($exams, 200);
-        // return view("welcome", ["esami" => $exams]);
+        // return response()->json($exams, 200);
+        return view("welcome", ["esami" => $exams]);
     }
 }
