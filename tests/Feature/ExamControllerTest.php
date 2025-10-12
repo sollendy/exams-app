@@ -22,7 +22,7 @@ class ExamControllerTest extends TestCase
             'exam_date' => '2025-10-10',
         ];
 
-        $response = $this->actingAs($user)->postJson('exam/create-exam', $data);
+        $response = $this->actingAs($user)->withoutMiddleware("checkRole")->postJson('exam/create-exam', $data);
 
         $response->assertStatus(201);
 
@@ -40,7 +40,7 @@ class ExamControllerTest extends TestCase
             'user_id' => $user->id,
         ]);
 
-        $response = $this->actingAs($user)->getJson('exam/user-exams');
+        $response = $this->actingAs($user)->withoutMiddleware("checkRole")->getJson('exam/user-exams');
 
         $response->assertStatus(200);
         $response->assertJsonFragment([

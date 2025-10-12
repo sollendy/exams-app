@@ -16,15 +16,21 @@ class ExamController extends Controller
             'exam_date' => 'required|date',
         ]);
 
-        $exam = Exam::create($request->only('title', 'exam_date'));
+        $exam = Exam::create([
+            'title' => $request->title,
+            'exam_date' => $request->exam_date,
+            'user_id' => $request->user()->id,
+        ]);
 
         return response()->json($exam, 201);
     }
 
     public function userExams(Request $request)
     {
-        $exams = $request->user()->exams;
-        return response()->json($exams, 200);
+        $userExams = Exam::where('user_id', $request->user()->id)->get();
+        // $exams = $request->user()->exams;
+        // dd($userExams);
+        return response()->json($userExams, 200);
     }
 
     public function allExams(Request $request)
