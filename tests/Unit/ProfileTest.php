@@ -1,9 +1,10 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Unit;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
 class ProfileTest extends TestCase
@@ -68,7 +69,7 @@ class ProfileTest extends TestCase
         $response = $this
             ->actingAs($user)
             ->delete('/profile', [
-                'password' => 'password',
+                'password' => 'user1234',
             ]);
 
         $response
@@ -95,5 +96,30 @@ class ProfileTest extends TestCase
             ->assertRedirect('/profile');
 
         $this->assertNotNull($user->fresh());
+    }
+
+    public function test_user_can_be_created_with_role_and_hashed_password()
+    {
+        $data = [
+            'name' => 'John Doe',
+            'email' => 'user@example.com',
+            'password' => 'user1234',
+            'password_confirmation' => 'user1234',
+            'role' => 'user',
+        ];
+
+        $response = $this->postJson('/register', $data);
+
+        $response->assertStatus(302);
+
+        $this->assertDatabaseHas('users', [
+            'email' => 'user@example.com',
+            'role' => 'user',
+        ]);
+
+        $user = User::where('email', 'user@example.com')->first();
+        $this->assertTrue(Hash::check('user1234', $user->password));
+
+        $response->assertRedirect(route('dashboard'));
     }
 }
