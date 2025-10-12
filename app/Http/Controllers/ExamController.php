@@ -37,17 +37,17 @@ class ExamController extends Controller
     {
         $query = Exam::query();
 
-        if ($request->has('title')) {
+        if ($request->has('title')&& $request->title != '') {
             $query->where('title', 'like', '%' . $request->title . '%');
         }
 
-        if ($request->has('date')) {
+        if ($request->has('date') && $request->date != '') {
             $query->whereDate('exam_date', $request->date);
         }
 
         $exams = $query->orderBy('exam_date')->get();
 
-        // return response()->json($exams, 200);
-        return view("welcome", ["esami" => $exams]);
+        return response()->json($exams, 200);
+        // return view("welcome", ["esami" => $exams]);
     }
 }

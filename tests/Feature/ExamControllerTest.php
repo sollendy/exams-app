@@ -52,13 +52,17 @@ class ExamControllerTest extends TestCase
     /** @test */
     public function user_can_filter_exams_by_title_and_date()
     {
+        $user = User::factory()->create();
+
         $exam1 = Exam::factory()->create([
             'title' => 'Math Exam',
             'exam_date' => '2025-10-10',
+            'user_id' => $user->id,
         ]);
         $exam2 = Exam::factory()->create([
             'title' => 'Science Exam',
             'exam_date' => '2025-11-12',
+            'user_id' => $user->id,
         ]);
 
         $response = $this->getJson('/?title=Math');
@@ -89,19 +93,23 @@ class ExamControllerTest extends TestCase
     /** @test */
     public function all_exams_are_returned_when_no_filters_are_provided()
     {
+        $user = User::factory()->create();
+
         $exam1 = Exam::factory()->create();
         $exam2 = Exam::factory()->create();
 
-        $response = $this->getJson('/all-exams');
+        $response = $this->getJson('/');
 
         $response->assertStatus(200);
         $response->assertJsonFragment([
             'id' => $exam1->id,
             'title' => $exam1->title,
+            'user_id' => $user->id,
         ]);
         $response->assertJsonFragment([
             'id' => $exam2->id,
             'title' => $exam2->title,
+            'user_id' => $user->id,
         ]);
     }
 }
