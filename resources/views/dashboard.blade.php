@@ -31,7 +31,7 @@
             <div class="card shadow-sm">
                 <div class="card-body text-dark">
                     @if (Auth::user()->role == 'user')
-                    {{ __('Sfoglia i tuoi esami!') }}
+                        {{ __('Sfoglia i tuoi esami!') }}
                         @if ($esamiDashboard->isNotEmpty())
                             <table class="table table-bordered table-hover table-striped mb-4">
                                 <thead>
@@ -54,6 +54,9 @@
                         @else
                             <p class="text-muted">Non ci sono esami disponibili al momento.</p>
                         @endif
+                    @else
+                        {{ __('Elenco esami studenti') }} <br>
+                        Dashboard altri utenti in corso ora pagate.
                     @endif
                 </div>
             </div>
