@@ -1,7 +1,7 @@
 <nav x-data="{ open: false }" class="navbar navbar-expand-lg navbar-light bg-white border-bottom">
     
     <div class="container">
-        <div class="d-flex justify-content-between align-items-center h-16">
+        <div class="w-100 d-flex justify-content-between align-items-center h-16">
             <div class="d-flex">
                 
                 <div class="flex-shrink-0">
@@ -33,7 +33,7 @@
 
                     <x-slot name="content">
                         <x-dropdown-link :href="route('profile.edit')">
-                            {{ __('Profile') }}
+                            {{ __('Il Mio Profilo') }}
                         </x-dropdown-link>
 
                         <!-- Authentication -->
@@ -43,7 +43,7 @@
                             <x-dropdown-link :href="route('logout')"
                                     onclick="event.preventDefault();
                                                 this.closest('form').submit();">
-                                {{ __('Log Out') }}
+                                {{ __('Esci') }}
                             </x-dropdown-link>
                         </form>
                     </x-slot>
