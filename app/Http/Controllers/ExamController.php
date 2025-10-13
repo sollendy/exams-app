@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use App\Models\Exam;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class ExamController extends Controller
 {
@@ -27,7 +28,12 @@ class ExamController extends Controller
 
     public function userExams(Request $request)
     {
-        $query = Exam::where('user_id', $request->user()->id);
+        if (Auth::user()->role == "user") {
+            $query = Exam::where('user_id', $request->user()->id);
+        } else {
+            $query = Exam::query();            
+        }
+
 
         if ($request->has('title') && $request->title != '') {
             $query->where('title', 'like', '%' . $request->title . '%');
@@ -37,9 +43,9 @@ class ExamController extends Controller
             $query->whereDate('exam_date', $request->date);
         }
 
-        $userExams = $query->orderBy('exam_date')->get() ?? collect();
+        $dasboardExams = $query->orderBy('exam_date')->get() ?? collect();
 
-        return view("dashboard", ["esamiUtente" => $userExams]);
+        return view("dashboard", ["esamiDashboard" => $dasboardExams]);
     }
 
     public function allExams(Request $request)

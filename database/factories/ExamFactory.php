@@ -21,11 +21,12 @@ class ExamFactory extends Factory
 
     public function definition(): array
     {
+        $userId = User::where('role', 'user')->inRandomOrder()->first()->id;
         return [
             'title' => $this->faker->word,
             'exam_date' => $this->faker->date(),
-            'vote' => $this->faker->randomFloat(2, 18, 30),
-            'user_id' => $this->faker->boolean(50) ? User::where('role', 'user')->inRandomOrder()->first()->id : null,
+            'vote' => $this->faker->boolean(50) ? $this->faker->randomFloat(2, 18, 30) : null,
+            'user_id' => $userId,
         ];
     }
 }

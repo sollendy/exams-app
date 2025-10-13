@@ -30,9 +30,9 @@
         <div class="container">
             <div class="card shadow-sm">
                 <div class="card-body text-dark">
-                    {{ __('Sfoglia i tuoi esami!') }}
                     @if (Auth::user()->role == 'user')
-                        @if ($esamiUtente->isNotEmpty())
+                    {{ __('Sfoglia i tuoi esami!') }}
+                        @if ($esamiDashboard->isNotEmpty())
                             <table class="table table-bordered table-hover table-striped mb-4">
                                 <thead>
                                     <tr>
@@ -42,7 +42,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($esamiUtente as $esame)
+                                    @foreach ($esamiDashboard as $esame)
                                         <tr>
                                             <td><strong>{{ $esame->title }}</strong></td>
                                             <td>{{ \Carbon\Carbon::parse($esame->exam_date)->format('d/m/Y') }}</td>

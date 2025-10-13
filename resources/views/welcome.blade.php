@@ -27,12 +27,12 @@
                     </a>
                 @else
                     <a href="{{ route('login') }}" class="btn btn-outline-dark btn-sm">
-                        Log in
+                        Accedi
                     </a>
 
                     @if (Route::has('register'))
                         <a href="{{ route('register') }}" class="btn btn-outline-dark btn-sm">
-                            Register
+                            Iscriviti
                         </a>
                     @endif
                 @endauth
