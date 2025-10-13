@@ -10,17 +10,33 @@
         </h2>
     </x-slot>
 
-    <div class="py-5">
+    <div class="mx-auto w-75 my-4">
+        <form action="{{ url('/dashboard') }}" method="GET">
+            <div class="row">
+                <div class="col-md-4">
+                    <input type="text" name="title" class="form-control" placeholder="Cerca per titolo">
+                </div>
+                <div class="col-md-4">
+                    <input type="date" name="date" class="form-control">
+                </div>
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-dark w-100">Filtra</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div>
         <div class="container">
             <div class="card shadow-sm">
                 <div class="card-body text-dark">
-                    {{ __("You're logged in!") }}
+                    {{ __('Sfoglia i tuoi esami!') }}
                     @if (Auth::user()->role == 'user')
                         @if ($esamiUtente->isNotEmpty())
                             <table class="table table-bordered table-hover table-striped mb-4">
                                 <thead>
                                     <tr>
-                                        <th>Titolo Esame</th>
+                                        <th>Materia</th>
                                         <th>Data Esame</th>
                                         <th>Voto Assegnato</th>
                                     </tr>

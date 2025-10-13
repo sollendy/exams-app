@@ -27,8 +27,18 @@ class ExamController extends Controller
 
     public function userExams(Request $request)
     {
-        $userExams = Exam::where('user_id', $request->user()->id)->get() ?? collect();
-        
+        $query = Exam::where('user_id', $request->user()->id);
+
+        if ($request->has('title') && $request->title != '') {
+            $query->where('title', 'like', '%' . $request->title . '%');
+        }
+
+        if ($request->has('date') && $request->date != '') {
+            $query->whereDate('exam_date', $request->date);
+        }
+
+        $userExams = $query->orderBy('exam_date')->get() ?? collect();
+
         return view("dashboard", ["esamiUtente" => $userExams]);
     }
 
@@ -36,7 +46,7 @@ class ExamController extends Controller
     {
         $query = Exam::query();
 
-        if ($request->has('title')&& $request->title != '') {
+        if ($request->has('title') && $request->title != '') {
             $query->where('title', 'like', '%' . $request->title . '%');
         }
 

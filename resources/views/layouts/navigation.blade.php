@@ -5,13 +5,13 @@
             <div class="d-flex">
                 
                 <div class="flex-shrink-0">
-                    <a href="{{ route('dashboard') }}">
+                    <a href="{{ url('/dashboard') }}">
                         <x-application-logo class="h-9 w-auto fill-current text-dark" />
                     </a>
                 </div>
 
                 <div class="d-none d-lg-flex ms-10">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                    <x-nav-link :href="url('/dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
                 </div>
@@ -65,7 +65,7 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'d-block': open, 'd-none': ! open}" class="d-none d-lg-none">
         <div class="pt-2 pb-3">
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+            <x-responsive-nav-link :href="url('/dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
         </div>

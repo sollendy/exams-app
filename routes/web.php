@@ -3,6 +3,7 @@
 use App\Http\Controllers\ExamController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TranscriptController;
+use App\Http\Middleware\CheckRole;
 use Illuminate\Support\Facades\Route;
 
 // Route::get('/', function () {
@@ -29,7 +30,7 @@ Route::get("/", [ExamController::class, "allExams"])->name("exams.index");
 //------------------------------------- PRIVATE -----------------------------------------------------------------
 
 Route::middleware("auth")->group(function () {
-    Route::get("/dashboard", [ExamController::class, "userExams"])->middleware("CheckRole:user")->name("exam.user");
+    Route::get("/dashboard", [ExamController::class, "userExams"])->middleware(CheckRole::class.':user');
     Route::post("/create-exam", [ExamController::class, "create"])->middleware("CheckRole:admin")->name("exam.create");
     Route::put("/give-vote", [TranscriptController::class, "assignVote"])
     ->middleware(['checkRole:admin,super-admin'])->name("exam.assignment");
