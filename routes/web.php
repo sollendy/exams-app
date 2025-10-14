@@ -29,12 +29,17 @@ Route::get("/", [ExamController::class, "allExams"])->name("exams.index");
 
 //------------------------------------- PRIVATE -----------------------------------------------------------------
 
-Route::middleware("auth")->group(function () {
-    Route::get("/dashboard", [ExamController::class, "getDashboardExams"])->middleware(CheckRole::class.':user,admin,supervisor');
-    Route::post("/create-exam", [ExamController::class, "create"])->middleware(CheckRole::class.':admin')->name("exam.create");
+    Route::get("/dashboard", [ExamController::class, "getDashboardExams"])->middleware(CheckRole::class . ':user,admin,supervisor');
+
+    Route::get("/create-exam", [ExamController::class, "showCreateForm"])
+        ->middleware(CheckRole::class . ':admin')
+        ->name("exam.create.form");
+
+    Route::post("/create-exam", [ExamController::class, "create"])->middleware(CheckRole::class . ':admin')->name("exam.create");
+
     Route::put("/give-vote", [TranscriptController::class, "assignVote"])
-    ->middleware(['checkRole:admin,super-admin'])->name("exam.assignment");
-});
+        ->middleware(['checkRole:admin,super-admin'])->name("exam.assignment");
+        
 //------------------------------------- FINE PRIVATE-----------------------------------------------------------------
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

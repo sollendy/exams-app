@@ -29,8 +29,8 @@
 
     @if (Auth::user()->role == 'admin')
         <div class="container pb-1">
-            <a href="{{ route('exam.create') }}" class="btn btn-success">
-                &#10010;Aggiungi Esame
+            <a href="{{ route('exam.create.form') }}" class="btn btn-secondary">
+                &#10010; Aggiungi Esame
             </a>
         </div>
     @endif
@@ -55,7 +55,7 @@
                                         <tr>
                                             <td><strong>{{ $esame->title }}</strong></td>
                                             <td>{{ \Carbon\Carbon::parse($esame->exam_date)->format('d/m/Y') }}</td>
-                                            <td>{{ $esame->vote }}</td>
+                                            <td>{{ $esame->vote ?? "Non assegnato" }}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>
