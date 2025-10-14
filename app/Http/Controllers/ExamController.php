@@ -26,14 +26,13 @@ class ExamController extends Controller
         return response()->json($exam, 201);
     }
 
-    public function userExams(Request $request)
+    public function getDashboardExams(Request $request)
     {
         if (Auth::user()->role == "user") {
             $query = Exam::where('user_id', $request->user()->id);
         } else {
             $query = Exam::query();            
         }
-
 
         if ($request->has('title') && $request->title != '') {
             $query->where('title', 'like', '%' . $request->title . '%');

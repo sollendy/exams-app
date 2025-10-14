@@ -26,6 +26,15 @@
         </form>
     </div>
 
+
+    @if (Auth::user()->role == 'admin')
+        <div class="container pb-1">
+            <a href="{{ route('exam.create') }}" class="btn btn-success">
+                &#10010;Aggiungi Esame
+            </a>
+        </div>
+    @endif
+
     <div>
         <div class="container">
             <div class="card shadow-sm">
@@ -55,8 +64,46 @@
                             <p class="text-muted">Non ci sono esami disponibili al momento.</p>
                         @endif
                     @else
-                        {{ __('Elenco esami studenti') }} <br>
-                        Dashboard altri utenti in corso ora pagate.
+                        {{ __('Elenco esami utenti') }}
+                        @if ($esamiDashboard->isNotEmpty())
+                            <table class="table table-bordered table-hover table-striped mb-4">
+                                <thead>
+                                    <tr>
+                                        <th>Materia</th>
+                                        <th>Data Esame</th>
+                                        <th>Nome Studente</th>
+                                        <th>Codice Studente</th>
+                                        <th>Voto Assegnato</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($esamiDashboard as $esame)
+                                        <tr>
+                                            <td><strong>{{ $esame->title }}</strong></td>
+                                            <td>{{ \Carbon\Carbon::parse($esame->exam_date)->format('d/m/Y') }}</td>
+                                            <td>{{ $esame->user->name }}</td>
+                                            <td>{{ $esame->user_id }}</td>
+                                            <td>
+                                                @if ($esame->vote)
+                                                    {{ $esame->vote }}
+                                                @else
+                                                    @if (Auth::user()->role == 'supervisor')
+                                                        <a href="{{ url('/give-vote', ['exam_id' => $esame->id]) }}"
+                                                            class="btn btn-primary btn-sm">
+                                                            Assegna Voto
+                                                        </a>
+                                                    @else
+                                                        Non assegnato
+                                                    @endif
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        @else
+                            <p class="text-muted">Non ci sono esami disponibili al momento.</p>
+                        @endif
                     @endif
                 </div>
             </div>

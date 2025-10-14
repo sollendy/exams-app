@@ -82,7 +82,7 @@
                                 <tr>
                                     <td><strong>{{ $esame->title }}</strong></td>
                                     <td>{{ \Carbon\Carbon::parse($esame->exam_date)->format('d/m/Y') }}</td>
-                                    <td>{{ $esame->vote }}</td>
+                                    <td>{{ $esame->vote ?? "Non Assegnato" }}</td>
                                 </tr>
                             @endforeach
                         </tbody>
