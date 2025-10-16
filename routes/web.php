@@ -18,6 +18,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get("/dashboard", [ExamController::class, "getDashboardExams"]);
 });
 
 // Rotte per gli esami
@@ -29,17 +30,17 @@ Route::get("/", [ExamController::class, "allExams"])->name("exams.index");
 
 //------------------------------------- PRIVATE -----------------------------------------------------------------
 
-    Route::get("/dashboard", [ExamController::class, "getDashboardExams"])->middleware(CheckRole::class . ':user,admin,supervisor');
+Route::get("/create-exam", [ExamController::class, "showCreateForm"])
+    ->middleware(CheckRole::class . ':admin')
+    ->name("exam.create.form");
+Route::post("/create-exam", [ExamController::class, "create"])->middleware(CheckRole::class . ':admin')->name("exam.create");
 
-    Route::get("/create-exam", [ExamController::class, "showCreateForm"])
-        ->middleware(CheckRole::class . ':admin')
-        ->name("exam.create.form");
+Route::put("/give-vote", [TranscriptController::class, "assignVote"])
+    ->middleware(CheckRole::class . ':supervisor')->name("exam.assignment");
 
-    Route::post("/create-exam", [ExamController::class, "create"])->middleware(CheckRole::class . ':admin')->name("exam.create");
+Route::get("/user-dashboard", [ExamController::class, "getUserExams"])->middleware(CheckRole::class . ':user');
+Route::post("/book-exam", [ExamController::class, "userBookExam"])->middleware(CheckRole::class . ':user')->name("exam.book");
 
-    Route::put("/give-vote", [TranscriptController::class, "assignVote"])
-        ->middleware(['checkRole:admin,super-admin'])->name("exam.assignment");
-        
 //------------------------------------- FINE PRIVATE-----------------------------------------------------------------
 
 require __DIR__ . '/auth.php';

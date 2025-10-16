@@ -13,9 +13,7 @@ class ExamController extends Controller
 {
     public function showCreateForm()
     {
-        $users = User::where('role', 'user')->get();
-
-        return view('exams.create_exams', compact('users'));
+        return view('exams.create_exams');
     }
 
     public function create(Request $request)
@@ -23,7 +21,6 @@ class ExamController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'exam_date' => 'required|date',
-            'user_id' => 'required|exists:users,id',
         ]);
 
         $existingExam = Exam::where('user_id', $request->user_id)
@@ -38,20 +35,31 @@ class ExamController extends Controller
         $exam = Exam::create([
             'title' => $request->title,
             'exam_date' => $request->exam_date,
-            'user_id' => $request->user_id,
         ]);
 
         return redirect('dashboard')->with('success', 'Esame creato con successo e assegnato all\'utente.');
     }
 
+    public function userBookExam(Request $request, $examId)
+    {
+        $exam = Exam::findOrFail($examId);
+
+        if ($exam->exam_date < now()) {
+            return back()->with('error', 'Non è possibile associarsi ad un esame con data passata.');
+        }
+
+        if (Auth::user()->exams()->where('exam_id', $exam->id)->exists()) {
+            return back()->with('error', 'Sei già iscritto a questo esame.');
+        }
+
+        Auth::user()->exams()->attach($exam->id);
+
+        return back()->with('success', 'Esame prenotato correttamente.');
+    }
 
     public function getDashboardExams(Request $request)
     {
-        if (Auth::user()->role == "user") {
-            $query = Exam::where('user_id', $request->user()->id);
-        } else {
-            $query = Exam::query();
-        }
+        $query = Exam::query();
 
         if ($request->has('title') && $request->title != '') {
             $query->where('title', 'like', '%' . $request->title . '%');
@@ -66,6 +74,13 @@ class ExamController extends Controller
         return view("dashboard", ["esamiDashboard" => $dasboardExams]);
     }
 
+    public function getUserExams()
+    {
+        $userExams = Auth::user()->exams()->orderBy('exam_date')->get();
+
+        return view('user_exams', ['esami' => $userExams]);
+    }
+
     public function allExams(Request $request)
     {
         $query = Exam::query();
@@ -78,7 +93,7 @@ class ExamController extends Controller
             $query->whereDate('exam_date', $request->date);
         }
 
-        $exams = $query->with("user")->orderBy('exam_date')->get();
+        $exams = $query->orderBy('exam_date')->get();
 
         // return response()->json($exams, 200);
         return view("welcome", ["esami" => $exams]);
