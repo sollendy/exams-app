@@ -21,16 +21,6 @@
                 <input type="date" name="exam_date" id="exam_date" class="form-control" required>
             </div>
 
-            <div class="form-group mt-3">
-                <label for="user_id">Seleziona Studente</label>
-                <select name="user_id" id="user_id" class="form-control" required>
-                    <option value="">Seleziona uno studente</option>
-                    @foreach ($users as $user)
-                        <option value="{{ $user->id }}">{{ $user->name }} - {{ $user->id }}</option>
-                    @endforeach
-                </select>
-            </div>
-
             <button type="submit" class="btn btn-dark mt-3">Crea Esame</button>
         </form>
     </div>

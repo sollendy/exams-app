@@ -23,13 +23,12 @@ class ExamController extends Controller
             'exam_date' => 'required|date',
         ]);
 
-        $existingExam = Exam::where('user_id', $request->user_id)
-            ->where('title', $request->title)
+        $existingExam = Exam::where('title', $request->title)
             ->whereDate('exam_date', $request->exam_date)
             ->first();
 
         if ($existingExam) {
-            return back()->withErrors(['exam_exists' => 'L\'utente ha già sostenuto questo esame con la stessa data.'])->withInput();
+            return back()->withErrors(['exam_exists' => 'L\'esame esiste già con la stessa data.'])->withInput();
         }
 
         $exam = Exam::create([
@@ -74,11 +73,20 @@ class ExamController extends Controller
         return view("dashboard", ["esamiDashboard" => $dasboardExams]);
     }
 
-    public function getUserExams()
+    public function getUserExams(Request $request)
     {
-        $userExams = Auth::user()->exams()->orderBy('exam_date')->get();
+        $query = Auth::user()->exams();
 
-        return view('user_exams', ['esami' => $userExams]);
+        if ($request->has('title') && $request->title != '') {
+            $query->where('title', 'like', '%' . $request->title . '%');
+        }
+
+        if ($request->has('date') && $request->date != '') {
+            $query->whereDate('exam_date', $request->date);
+        }
+
+        $userExams = $query->orderBy('exam_date')->get();
+        return view('exams.user_exams', ['esamiUtente' => $userExams]);
     }
 
     public function allExams(Request $request)

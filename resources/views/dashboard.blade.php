@@ -37,10 +37,12 @@
 
     <div>
         <div class="container">
+            @if (Auth::user()->role == 'user')
+                <a class="btn btn-secondary mb-1" href="{{ url('/user-dashboard') }}">Sfoglia i tuoi esami!</a>
+            @endif
             <div class="card shadow-sm">
                 <div class="card-body text-dark">
                     @if (Auth::user()->role == 'user')
-                        {{ __('Sfoglia i tuoi esami!') }}
                         @if ($esamiDashboard->isNotEmpty())
                             <table class="table table-bordered table-hover table-striped mb-4">
                                 <thead>
@@ -55,7 +57,7 @@
                                         <tr>
                                             <td><strong>{{ $esame->title }}</strong></td>
                                             <td>{{ \Carbon\Carbon::parse($esame->exam_date)->format('d/m/Y') }}</td>
-                                            <td>{{ $esame->vote ?? "Non assegnato" }}</td>
+                                            <td>{{ $esame->vote ?? 'Non assegnato' }}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -71,9 +73,6 @@
                                     <tr>
                                         <th>Materia</th>
                                         <th>Data Esame</th>
-                                        <th>Nome Studente</th>
-                                        <th>Codice Studente</th>
-                                        <th>Voto Assegnato</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -81,22 +80,6 @@
                                         <tr>
                                             <td><strong>{{ $esame->title }}</strong></td>
                                             <td>{{ \Carbon\Carbon::parse($esame->exam_date)->format('d/m/Y') }}</td>
-                                            <td>{{ $esame->user->name }}</td>
-                                            <td>{{ $esame->user_id }}</td>
-                                            <td>
-                                                @if ($esame->vote)
-                                                    {{ $esame->vote }}
-                                                @else
-                                                    @if (Auth::user()->role == 'supervisor')
-                                                        <a href="{{ url('/give-vote', ['exam_id' => $esame->id]) }}"
-                                                            class="btn btn-primary btn-sm">
-                                                            Assegna Voto
-                                                        </a>
-                                                    @else
-                                                        Non assegnato
-                                                    @endif
-                                                @endif
-                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
