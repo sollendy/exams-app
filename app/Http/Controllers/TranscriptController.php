@@ -28,6 +28,6 @@ class TranscriptController extends Controller
 
         $user->exams()->updateExistingPivot($examId, ['vote' => $request->vote]);
 
-        return response()->json(['message' => 'Voto assegnato correttamente.'], 200);
+        return redirect()->back()->with('success', 'Voto assegnato con successo!');
     }
 }

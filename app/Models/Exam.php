@@ -14,6 +14,7 @@ class Exam extends Model
 
      public function users()
     {
-        return $this->belongsToMany(User::class, 'exams_users');
+       return $this->belongsToMany(User::class, 'exams_users')
+                ->withPivot('vote');
     }
 }

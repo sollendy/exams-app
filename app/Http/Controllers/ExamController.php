@@ -39,6 +39,16 @@ class ExamController extends Controller
         return redirect('dashboard')->with('success', 'Esame creato con successo e assegnato all\'utente.');
     }
 
+    public function showExamUsers($examId)
+    {
+        $exam = Exam::findOrFail($examId);
+
+        $users = $exam->users;
+
+        return view('exams.exam_users_list', compact('exam', 'users'));
+        // return response()->json(['exam'=>$exam, 'users'=>$users]);
+    }
+
     public function userBookExam(Request $request, $examId)
     {
         $exam = Exam::findOrFail($examId);

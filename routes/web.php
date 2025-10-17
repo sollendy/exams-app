@@ -18,7 +18,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::get("/dashboard", [ExamController::class, "getDashboardExams"]);
+    Route::get("/dashboard", [ExamController::class, "getDashboardExams"])->name('dashboard');
 });
 
 // Rotte per gli esami
@@ -35,8 +35,12 @@ Route::get("/create-exam", [ExamController::class, "showCreateForm"])
     ->name("exam.create.form");
 Route::post("/create-exam", [ExamController::class, "create"])->middleware(CheckRole::class . ':admin')->name("exam.create");
 
-Route::put("/give-vote", [TranscriptController::class, "assignVote"])
-    ->middleware(CheckRole::class . ':supervisor')->name("exam.assignment");
+Route::put("/give-vote/{userId}/{examId}", [TranscriptController::class, "assignVote"])
+    ->middleware(CheckRole::class . ':supervisor')->name("exam.assign.vote");
+
+Route::get('/exam/{examId}/users', [ExamController::class, 'showExamUsers'])
+    ->middleware(CheckRole::class . ':supervisor')
+    ->name('exam.users');
 
 Route::get("/user-dashboard", [ExamController::class, "getUserExams"])->middleware(CheckRole::class . ':user');
 Route::post("/book-exam", [ExamController::class, "userBookExam"])->middleware(CheckRole::class . ':user')->name("exam.book");

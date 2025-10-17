@@ -73,6 +73,7 @@
                                     <tr>
                                         <th>Materia</th>
                                         <th>Data Esame</th>
+                                        <th>Azioni</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -80,6 +81,7 @@
                                         <tr>
                                             <td><strong>{{ $esame->title }}</strong></td>
                                             <td>{{ \Carbon\Carbon::parse($esame->exam_date)->format('d/m/Y') }}</td>
+                                            <td><a href="{{ route('exam.users', ['examId' => $esame->id]) }}">Utenti Iscritti</a></td>
                                         </tr>
                                     @endforeach
                                 </tbody>
