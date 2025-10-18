@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class ExamController extends Controller
 {
@@ -46,24 +47,25 @@ class ExamController extends Controller
         $users = $exam->users;
 
         return view('exams.exam_users_list', compact('exam', 'users'));
-        // return response()->json(['exam'=>$exam, 'users'=>$users]);
     }
 
-    public function userBookExam(Request $request, $examId)
+    public function userBookExam(Request $request, $userId, $examId)
     {
+        $user = User::findOrFail($userId);
+
         $exam = Exam::findOrFail($examId);
 
-        if ($exam->exam_date < now()) {
-            return back()->with('error', 'Non è possibile associarsi ad un esame con data passata.');
+        $alreadyBooked = $user->exams()->where('exam_id', $examId)->exists();
+
+        if ($alreadyBooked) {
+            Log::info("sono dentro already booked");
+            return back()->with(['error' => 'L\'utente ha già prenotato questo esame.'], 400);
         }
+        Log::info("sono uscito da already booked");
+        $user->exams()->attach($examId, ['vote' => 0]);
 
-        if (Auth::user()->exams()->where('exam_id', $exam->id)->exists()) {
-            return back()->with('error', 'Sei già iscritto a questo esame.');
-        }
-
-        Auth::user()->exams()->attach($exam->id);
-
-        return back()->with('success', 'Esame prenotato correttamente.');
+        Log::info("sono alla fine del dannato controller");
+        return back()->with('success', 'Esame prenotato con successo! Esame: ' . $exam->title);
     }
 
     public function getDashboardExams(Request $request)

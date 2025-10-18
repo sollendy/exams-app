@@ -3,7 +3,7 @@
         <h2 class="h4 font-weight-bold text-dark">
             {{-- {{ __('Dashboard') }} --}}
             @if (Auth::user()->role == 'user')
-                Il tuo sommario esami
+                I tuoi esami a portata di clic
             @else
                 Lista esami
             @endif
@@ -49,17 +49,42 @@
                                     <tr>
                                         <th>Materia</th>
                                         <th>Data Esame</th>
-                                        <th>Voto Assegnato</th>
+                                        <th>Azioni</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($esamiDashboard as $esame)
+                                        @php
+                                            $isAlreadyBooked = auth()
+                                                ->user()
+                                                ->exams()
+                                                ->where('exam_id', $esame->id)
+                                                ->exists();
+                                        @endphp
                                         <tr>
                                             <td><strong>{{ $esame->title }}</strong></td>
                                             <td>{{ \Carbon\Carbon::parse($esame->exam_date)->format('d/m/Y') }}</td>
-                                            <td>{{ $esame->vote ?? 'Non assegnato' }}</td>
+                                            <td>
+                                                @if (!$isAlreadyBooked)
+                                                    <form
+                                                        action="{{ route('exam.book', ['examId' => $esame->id, 'userId' => auth()->user()->id]) }}"
+                                                        method="POST">
+                                                        @csrf
+                                                        <button type="submit" class="btn btn-secondary">Prenota
+                                                            Esame</button>
+                                                    </form>
+                                                @else
+                                                    <span class="text-muted">Prenotato</span>
+                                                @endif
+                                            </td>
                                         </tr>
                                     @endforeach
+
+                                    @if (session('success'))
+                                        <div class="alert alert-success">
+                                            {{ session('success') }}
+                                        </div>
+                                    @endif
                                 </tbody>
                             </table>
                         @else
@@ -81,7 +106,9 @@
                                         <tr>
                                             <td><strong>{{ $esame->title }}</strong></td>
                                             <td>{{ \Carbon\Carbon::parse($esame->exam_date)->format('d/m/Y') }}</td>
-                                            <td><a href="{{ route('exam.users', ['examId' => $esame->id]) }}">Utenti Iscritti</a></td>
+                                            <td><a class="link-dark"
+                                                    href="{{ route('exam.users', ['examId' => $esame->id]) }}">Utenti
+                                                    Iscritti</a></td>
                                         </tr>
                                     @endforeach
                                 </tbody>

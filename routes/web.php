@@ -43,7 +43,7 @@ Route::get('/exam/{examId}/users', [ExamController::class, 'showExamUsers'])
     ->name('exam.users');
 
 Route::get("/user-dashboard", [ExamController::class, "getUserExams"])->middleware(CheckRole::class . ':user');
-Route::post("/book-exam", [ExamController::class, "userBookExam"])->middleware(CheckRole::class . ':user')->name("exam.book");
+Route::post("/exam/{examId}/book/{userId}", [ExamController::class, "userBookExam"])->middleware(CheckRole::class . ':user')->name("exam.book");
 
 //------------------------------------- FINE PRIVATE-----------------------------------------------------------------
 
