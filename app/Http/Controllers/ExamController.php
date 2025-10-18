@@ -58,7 +58,7 @@ class ExamController extends Controller
         $alreadyBooked = $user->exams()->where('exam_id', $examId)->exists();
 
         if ($alreadyBooked) {
-            return back()->with(['error' => 'L\'utente ha già prenotato questo esame.'], 400);
+            return back()->with(['error' => 'Hai già prenotato questo esame.'], 302);
         }
         $user->exams()->attach($examId, ['vote' => null]);
 

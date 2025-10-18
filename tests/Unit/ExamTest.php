@@ -19,12 +19,17 @@ class ExamTest extends TestCase
         $exam = Exam::create([
             'title' => 'Math Exam',
             'exam_date' => '2025-10-10',
-            'user_id' => $user->id,
         ]);
+
+        $exam->users()->attach($user->id);
 
         $this->assertDatabaseHas('exams', [
             'title' => 'Math Exam',
             'exam_date' => '2025-10-10',
+        ]);
+
+        $this->assertDatabaseHas('exams_users', [
+            'exam_id' => $exam->id,
             'user_id' => $user->id,
         ]);
     }
@@ -33,14 +38,16 @@ class ExamTest extends TestCase
     public function an_exam_belongs_to_a_user()
     {
         $user = User::factory()->create();
+
         $exam = Exam::create([
             'title' => 'Science Exam',
             'exam_date' => '2025-11-12',
-            'user_id' => $user->id,
         ]);
 
-        $this->assertInstanceOf(User::class, $exam->user);
-        $this->assertEquals($user->id, $exam->user->id);
+        $exam->users()->attach($user->id);
+
+        $this->assertInstanceOf(User::class, $exam->users->first());
+        $this->assertEquals($user->id, $exam->users->first()->id);
     }
 
     /** @test */
