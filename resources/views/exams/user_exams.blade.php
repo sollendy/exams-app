@@ -35,7 +35,7 @@
                                         <tr>
                                             <td><strong>{{ $esame->title }}</strong></td>
                                             <td>{{ \Carbon\Carbon::parse($esame->exam_date)->format('d/m/Y') }}</td>
-                                            <td>{{ $esame->vote ?? 'Non assegnato' }}</td>
+                                            <td>{{ $esame->pivot->vote ?? 'Non assegnato' }}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>

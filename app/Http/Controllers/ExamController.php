@@ -37,7 +37,7 @@ class ExamController extends Controller
             'exam_date' => $request->exam_date,
         ]);
 
-        return redirect('dashboard')->with('success', 'Esame creato con successo e assegnato all\'utente.');
+        return redirect('dashboard')->with('success', 'Esame creato con successo.');
     }
 
     public function showExamUsers($examId)
@@ -58,19 +58,24 @@ class ExamController extends Controller
         $alreadyBooked = $user->exams()->where('exam_id', $examId)->exists();
 
         if ($alreadyBooked) {
-            Log::info("sono dentro already booked");
             return back()->with(['error' => 'L\'utente ha già prenotato questo esame.'], 400);
         }
-        Log::info("sono uscito da already booked");
-        $user->exams()->attach($examId, ['vote' => 0]);
+        $user->exams()->attach($examId, ['vote' => null]);
 
-        Log::info("sono alla fine del dannato controller");
         return back()->with('success', 'Esame prenotato con successo! Esame: ' . $exam->title);
     }
 
     public function getDashboardExams(Request $request)
     {
+        $user = Auth::user();
         $query = Exam::query();
+
+        if ($user->role == 'user') {
+            $userExamIds = $user->exams()->pluck('exam_id');
+
+            $query->whereNotIn('id', $userExamIds);
+        }
+
 
         if ($request->has('title') && $request->title != '') {
             $query->where('title', 'like', '%' . $request->title . '%');

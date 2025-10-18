@@ -23,7 +23,7 @@ class TranscriptController extends Controller
         }
 
         $request->validate([
-            'vote' => 'required|integer|min:1|max:10',
+            'vote' => 'required|integer|min:18|max:30',
         ]);
 
         $user->exams()->updateExistingPivot($examId, ['vote' => $request->vote]);

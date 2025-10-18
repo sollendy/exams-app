@@ -35,8 +35,8 @@
                                                 <span>{{ $user->pivot->vote }}</span>
                                             @else
                                                 <input type="number" name="vote" class="form-control"
-                                                    placeholder="Voto" min="1" max="10" required>
-                                                <button type="submit" class="btn btn-secondary">Assegna Voto</button>
+                                                    placeholder="Voto" min="18" max="30" required>
+                                                <button type="submit" class="btn btn-secondary ms-1 text-nowrap">Assegna Voto</button>
                                             @endif
                                         </form>
                                     </td>
