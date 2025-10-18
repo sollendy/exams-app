@@ -62,7 +62,7 @@
         </div>
 
         <div class="d-flex align-items-center gap-3">
-            <button type="submit" class="btn btn-primary">{{ __('Salva') }}</button>
+            <button type="submit" class="btn btn-secondary">{{ __('Salva') }}</button>
 
             @if (session('status') === 'profile-updated')
                 <p class="text-muted mb-0" x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)">

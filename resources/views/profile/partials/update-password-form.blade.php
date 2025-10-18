@@ -53,7 +53,7 @@
         </div>
 
         <div class="d-flex align-items-center gap-3">
-            <button type="submit" class="btn btn-primary">{{ __('Conferma') }}</button>
+            <button type="submit" class="btn btn-secondary">{{ __('Conferma') }}</button>
 
             @if (session('status') === 'password-updated')
                 <p class="text-muted mb-0" x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)">

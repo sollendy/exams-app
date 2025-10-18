@@ -53,17 +53,14 @@
             <!-- Hamburger -->
             <div class="d-flex d-lg-none">
                 <button @click="open = ! open" class="btn btn-link text-muted p-2">
-                    <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                        <path :class="{'d-none': open, 'd-flex': ! open }" class="d-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                        <path :class="{'d-none': ! open, 'd-flex': open }" class="d-none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
+                    <i class="bi bi-list"></i>
                 </button>
             </div>
         </div>
     </div>
 
     <!-- Responsive Navigation Menu -->
-    <div :class="{'d-block': open, 'd-none': ! open}" class="d-none d-lg-none">
+    <div :class="{'d-block': open, 'd-none': ! open}" class="d-none d-lg-none mx-auto">
         <div class="pt-2 pb-3">
             <x-responsive-nav-link :href="url('/dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
@@ -79,7 +76,7 @@
 
             <div class="mt-3">
                 <x-responsive-nav-link :href="route('profile.edit')">
-                    {{ __('Profile') }}
+                    {{ __('Profilo') }}
                 </x-responsive-nav-link>
 
                 <!-- Authentication -->
@@ -89,7 +86,7 @@
                     <x-responsive-nav-link :href="route('logout')"
                             onclick="event.preventDefault();
                                         this.closest('form').submit();">
-                        {{ __('Log Out') }}
+                        {{ __('Esci') }}
                     </x-responsive-nav-link>
                 </form>
             </div>
