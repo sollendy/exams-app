@@ -74,7 +74,7 @@
                             <tr>
                                 <th>Titolo Esame</th>
                                 <th>Data Esame</th>
-                                <th>Voto Assegnato</th>
+                                <th>Iscritti</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -82,7 +82,7 @@
                                 <tr>
                                     <td><strong>{{ $esame->title }}</strong></td>
                                     <td>{{ \Carbon\Carbon::parse($esame->exam_date)->format('d/m/Y') }}</td>
-                                    <td>{{ $esame->vote ?? "Non Assegnato" }}</td>
+                                    <td>{{ $esame->users_count  ?? 0 }}</td>
                                 </tr>
                             @endforeach
                         </tbody>

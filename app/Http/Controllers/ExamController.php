@@ -49,7 +49,7 @@ class ExamController extends Controller
         return view('exams.exam_users_list', compact('exam', 'users'));
     }
 
-    public function userBookExam(Request $request, $userId, $examId)
+    public function userBookExam(Request $request, $examId, $userId,)
     {
         $user = User::findOrFail($userId);
 
@@ -87,7 +87,8 @@ class ExamController extends Controller
 
     public function getUserExams(Request $request)
     {
-        $query = Auth::user()->exams();
+        $user =  Auth::user();
+        $query = $user->exams();
 
         if ($request->has('title') && $request->title != '') {
             $query->where('title', 'like', '%' . $request->title . '%');
@@ -113,9 +114,8 @@ class ExamController extends Controller
             $query->whereDate('exam_date', $request->date);
         }
 
-        $exams = $query->orderBy('exam_date')->get();
+        $exams = $query->withCount('users')->orderBy('exam_date')->get();
 
-        // return response()->json($exams, 200);
         return view("welcome", ["esami" => $exams]);
     }
 }

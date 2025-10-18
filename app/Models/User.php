@@ -50,6 +50,6 @@ class User extends Authenticatable
 
     public function exams()
     {
-        return $this->belongsToMany(Exam::class, 'exams_users');
+        return $this->belongsToMany(Exam::class, 'exams_users')->withPivot("vote");
     }
 }
