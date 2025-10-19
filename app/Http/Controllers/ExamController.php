@@ -67,15 +67,7 @@ class ExamController extends Controller
 
     public function getDashboardExams(Request $request)
     {
-        $user = Auth::user();
         $query = Exam::query();
-
-        if ($user->role == 'user') {
-            $userExamIds = $user->exams()->pluck('exam_id');
-
-            $query->whereNotIn('id', $userExamIds);
-        }
-
 
         if ($request->has('title') && $request->title != '') {
             $query->where('title', 'like', '%' . $request->title . '%');
@@ -85,7 +77,11 @@ class ExamController extends Controller
             $query->whereDate('exam_date', $request->date);
         }
 
-        $dasboardExams = $query->orderBy('exam_date')->get() ?? collect();
+        $dasboardExams = $query->withCount('users')->orderBy('exam_date')->get() ?? collect();
+
+        if(Auth::user()->role == "user") {
+            $dasboardExams = $query->withCount('users')->orderBy('exam_date')->where("exam_date", ">", now())->get() ?? collect();
+        }
 
         return view("dashboard", ["esamiDashboard" => $dasboardExams]);
     }

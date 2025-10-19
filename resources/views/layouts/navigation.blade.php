@@ -4,17 +4,15 @@
         <div class="w-100 d-flex justify-content-between align-items-center h-16">
             <div class="d-flex">
 
-                {{-- <div class="d-lg-none">
-                    <a href="{{ url('/dashboard') }}">
-                        <x-application-logo class="h-9 w-auto fill-current text-dark" />
-                    </a>
-                </div> --}}
-
                 <div class="d-flex ms-10">
                     <x-nav-link :href="url('/dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Home') }}
                     </x-nav-link>
                 </div>
+
+                @if (Auth::user()->role == 'user')
+                    <a class="link-dark" href="{{ url('/user-dashboard') }}">Sfoglia i tuoi esami!</a>
+                @endif
             </div>
 
             <div class="d-none d-lg-flex align-items-center ms-6">

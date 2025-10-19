@@ -52,15 +52,18 @@
 
                 <div class="mb-4">
                     <form action="{{ route('exams.index') }}" method="GET">
-                        <div class="row">
-                            <div class="col-md-4">
+                        <div class="row text-center">
+                            <div class="col-md-3">
                                 <input type="text" name="title" class="form-control" placeholder="Cerca per titolo">
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <input type="date" name="date" class="form-control">
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <button type="submit" class="btn btn-dark w-100">Filtra</button>
+                            </div>
+                            <div class="col-md-3">
+                                <a href="{{route('exams.index')}}" class="btn btn-secondary rounded-pill">Azzera filtri</a>
                             </div>
                         </div>
                     </form>
@@ -69,9 +72,9 @@
                 <h2 class="text-center mb-4">Esplora la nostra banca dati</h2>
 
                 @if (count($esami) > 0)
-                    <table class="table table-bordered table-hover table-striped mb-4">
-                        <thead>
-                            <tr>
+                    <table class="table table-bordered table-hover table-striped text-center mb-4 fs-5">
+                        <thead class="text-uppercase">
+                            <tr class="align-middle">
                                 <th>Titolo Esame</th>
                                 <th>Data Esame</th>
                                 <th>Iscritti</th>
@@ -79,10 +82,10 @@
                         </thead>
                         <tbody>
                             @foreach ($esami as $esame)
-                                <tr>
-                                    <td><strong>{{ $esame->title }}</strong></td>
-                                    <td>{{ \Carbon\Carbon::parse($esame->exam_date)->format('d/m/Y') }}</td>
-                                    <td>{{ $esame->users_count  ?? 0 }}</td>
+                                <tr class="align-middle">
+                                    <td class="text-uppercase">{{ $esame->title }}</td>
+                                    <td class="fst-italic">{{ \Carbon\Carbon::parse($esame->exam_date)->format('d/m/Y') }}</td>
+                                    <td class="py-3">{{ $esame->users_count  ?? 0 }}</td>
                                 </tr>
                             @endforeach
                         </tbody>
