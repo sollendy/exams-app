@@ -93,26 +93,48 @@
                     @else
                         {{ __('Elenco esami utenti') }}
                         @if ($esamiDashboard->isNotEmpty())
-                            <table class="table table-bordered table-hover table-striped mb-4">
-                                <thead>
-                                    <tr>
-                                        <th>Materia</th>
-                                        <th>Data Esame</th>
-                                        <th>Azioni</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($esamiDashboard as $esame)
+                            @if (Auth::user()->role == 'supervisor')
+                                <table class="table table-bordered table-hover table-striped mb-4">
+                                    <thead>
                                         <tr>
-                                            <td><strong>{{ $esame->title }}</strong></td>
-                                            <td>{{ \Carbon\Carbon::parse($esame->exam_date)->format('d/m/Y') }}</td>
-                                            <td><a class="link-dark"
-                                                    href="{{ route('exam.users', ['examId' => $esame->id]) }}">Utenti
-                                                    Iscritti</a></td>
+                                            <th>Materia</th>
+                                            <th>Data Esame</th>
+                                            <th>Azioni</th>
                                         </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($esamiDashboard as $esame)
+                                            <tr>
+                                                <td><strong>{{ $esame->title }}</strong></td>
+                                                <td>{{ \Carbon\Carbon::parse($esame->exam_date)->format('d/m/Y') }}</td>
+                                                <td><a class="link-dark"
+                                                        href="{{ route('exam.users', ['examId' => $esame->id]) }}">Utenti
+                                                        Iscritti</a></td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            @else
+                                <table class="table table-bordered table-hover table-striped mb-4">
+                                    <thead>
+                                        <tr>
+                                            <th>Titolo Esame</th>
+                                            <th>Data Esame</th>
+                                            <th>Data Creazione</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($esamiDashboard as $esame)
+                                            <tr>
+                                                <td><strong>{{ $esame->title }}</strong></td>
+                                                <td>{{ \Carbon\Carbon::parse($esame->exam_date)->format('d/m/Y') }}
+                                                </td>
+                                                <td>{{ $esame->created_at }}</td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            @endif
                         @else
                             <p class="text-muted">Non ci sono esami disponibili al momento.</p>
                         @endif
