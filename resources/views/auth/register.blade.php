@@ -36,7 +36,7 @@
         </div>
 
         <div class="flex justify-center items-center mt-5 py-2">
-            <div><a href="{{ url('/') }}">&#8592;Torna alla banca dati</a></div>
+            <div><a class="" href="{{ url('/') }}">&#8592;Torna alla banca dati</a></div>
             <x-primary-button class="ms-3">
                 {{ __('Registrati') }}
             </x-primary-button>

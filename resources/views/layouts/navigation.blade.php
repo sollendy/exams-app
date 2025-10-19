@@ -4,20 +4,20 @@
         <div class="w-100 d-flex justify-content-between align-items-center h-16">
             <div class="d-flex">
 
-                <div class="flex-shrink-0">
+                {{-- <div class="d-lg-none">
                     <a href="{{ url('/dashboard') }}">
                         <x-application-logo class="h-9 w-auto fill-current text-dark" />
                     </a>
-                </div>
+                </div> --}}
 
-                <div class="d-none d-lg-flex ms-10">
+                <div class="d-flex ms-10">
                     <x-nav-link :href="url('/dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
                 </div>
             </div>
 
-            <div class="d-none d-sm-flex align-items-center ms-6">
+            <div class="d-none d-lg-flex align-items-center ms-6">
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button class="btn btn-link text-muted d-flex align-items-center px-3 py-2 rounded">
@@ -63,7 +63,7 @@
     </div>
 
     <!-- Responsive Navigation Menu -->
-    <div :class="{ 'd-block': open, 'd-none': !open }" class="d-none d-lg-none mx-auto">
+    <div :class="{ 'd-block': open, 'd-none': !open }" class="w-75 d-none d-lg-none mx-auto">
         <div class="pt-2 pb-3">
             <x-responsive-nav-link :href="url('/dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
