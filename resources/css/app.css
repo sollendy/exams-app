@@ -3,3 +3,37 @@
 @tailwind utilities;
 @import "bootstrap/dist/css/bootstrap.min.css";
 @import "bootstrap-icons/font/bootstrap-icons.css";
+
+#login-logo-wrap {
+    display: flex;
+    justify-content: center;
+    height: 200px;
+    margin-top: 20px;
+}
+
+#login-logo-container{
+    border: 3px solid black; 
+    border-radius: 100%;
+    padding: 10px;
+}
+
+
+#loginForm input{
+    border: 2px solid black;
+}
+#loginForm input:focus{
+    outline: none;
+    box-shadow: none;
+}
+
+#registerForm input{
+    border: 2px solid black;
+}
+#registerForm input:focus{
+    outline: none;
+    box-shadow: none;
+}
+
+#loginForm [type='checkbox']{
+    color: unset;
+}

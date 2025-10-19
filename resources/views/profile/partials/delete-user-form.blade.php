@@ -9,11 +9,8 @@
         </p>
     </header>
 
-    <x-danger-button
-        x-data=""
-        x-on:click.prevent="$dispatch('open-modal', 'confirm-user-deletion')"
-        class="btn btn-danger"
-    >{{ __('Cancella Profilo') }}</x-danger-button>
+    <x-danger-button x-data="" x-on:click.prevent="$dispatch('open-modal', 'confirm-user-deletion')"
+        class="btn btn-danger">{{ __('Cancella Profilo') }}</x-danger-button>
 
     <x-modal name="confirm-user-deletion" :show="$errors->userDeletion->isNotEmpty()" focusable>
         <form method="post" action="{{ route('profile.destroy') }}" class="p-4">
@@ -25,19 +22,14 @@
             </h2>
 
             <p class="mt-2 text-muted">
-                {{ __('Una volta eliminato il tuo profilo, tutte le risorse e i dati in esso contenuti saranno cancellati in modo definitivo. Inserisci la tua password per confermare che desideri eliminare definitivamente il tuo profilo.') }}
+                {{ __('Una volta eliminato il tuo profilo, tutte le risorse e i dati in esso contenuti saranno cancellati in modo permanente. Inserisci la tua password per confermare che desideri eliminare definitivamente il tuo profilo.') }}
             </p>
 
             <div class="mt-4">
                 <x-input-label for="password" value="{{ __('Password') }}" class="visually-hidden" />
 
-                <x-text-input
-                    id="password"
-                    name="password"
-                    type="password"
-                    class="form-control mt-2 w-75"
-                    placeholder="{{ __('Password') }}"
-                />
+                <x-text-input id="password" name="password" type="password" class="form-control mt-2 w-75"
+                    placeholder="{{ __('Password') }}" />
 
                 <x-input-error :messages="$errors->userDeletion->get('password')" class="mt-2 text-danger" />
             </div>
