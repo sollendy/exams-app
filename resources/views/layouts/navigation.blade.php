@@ -12,7 +12,7 @@
 
                 <div class="d-flex ms-10">
                     <x-nav-link :href="url('/dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
+                        {{ __('Home') }}
                     </x-nav-link>
                 </div>
             </div>
